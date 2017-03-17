@@ -1,0 +1,70 @@
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <deque>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+class Sunnygraphs2 {
+public:
+	long long count(vector <int>);
+};
+
+long long Sunnygraphs2::count(vector <int> a) {
+
+int n = a.size();
+	vector<bool> visited(n);
+	
+	vector<int> cycles;
+	for(int i = 0 ; i < n ; i++)
+	{
+		if(!visited[i]){
+			bool cycleformed = false;
+			int y = a[i];
+			for(int  j = 0 ; j < n ; j++){
+				if(y==i)
+				cycleformed=true;
+				y=a[y];
+			}
+			if(cycleformed){
+				visited[i]=true;
+				y=a[i];
+				int counter=1;
+				while(y!=i){
+					counter++;
+					visited[y]=true;
+					y=a[y];
+				}
+				cycles.push_back(counter);
+			}
+		}
+	}
+	
+	long long int  nocycles = n - accumulate(cycles.begin(),cycles.end(),0);
+	long long int  res = (1LL<<nocycles);
+	for(int x : cycles){
+		res *= ((1LL<<x)-1);
+	}
+	
+	if(cycles.size()==1)
+	res++;
+	
+	return res;
+}
+
+<%:testing-code%>
+//Powered by [KawigiEdit] 2.0!
