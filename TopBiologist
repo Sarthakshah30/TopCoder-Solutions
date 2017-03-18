@@ -1,0 +1,55 @@
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <deque>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+#include <queue>
+
+using namespace std;
+
+class TopBiologist {
+public:
+	string findShortestNewSequence(string);
+	queue<string> q;
+	void adder(string str);
+};
+
+string TopBiologist::findShortestNewSequence(string sequence) {
+	adder("");
+	std::size_t found;
+	while(!q.empty()){
+			string str = q.front();
+			q.pop();
+			found = sequence.find(str);
+			if(found!=std::string::npos)
+			adder(str);
+			else{
+			return str;
+			}
+	}
+	return "";
+}
+
+void TopBiologist::adder(string str){
+	q.push(str+"A");
+	q.push(str+"C");
+	q.push(str+"G");
+	q.push(str+"T");
+}
+
+<%:testing-code%>
+//Powered by [KawigiEdit] 2.0!
