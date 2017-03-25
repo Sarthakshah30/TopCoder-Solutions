@@ -1,0 +1,46 @@
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <queue>
+#include <deque>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+
+class StringTransform {
+public:
+	string isPossible(string s, string t) {
+		if(s.size()!=t.size())
+		return "Impossible";
+		for(int i = s.size()-1 ; i>=0 ; i--){
+			if(s[i]!=t[i]){
+				int j;
+				for(j= 0 ;j< i ; j++)
+				if(s[j]==t[i])
+				break;
+				if(j==i)
+				return "Impossible";
+			}
+		}
+		return "Possible";
+		
+	}
+};
+
+
+<%:testing-code%>
+//Powered by KawigiEdit 2.1.4 (beta) modified by pivanof!
