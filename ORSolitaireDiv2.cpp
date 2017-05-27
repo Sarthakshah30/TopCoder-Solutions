@@ -25,63 +25,22 @@ using namespace std;
 class ORSolitaireDiv2 {
 public:
 	int getMinimum(vector <int> numbers, int goal) {
+		vector<int> xd;
 		for(int i = 0 ; i<numbers.size() ; i++){
-			if(numbers[i]>goal)
-			numbers.erase(numbers.begin()+i);
+			if(numbers[i]<=goal && (numbers[i]|goal)==goal)
+			xd.push_back(numbers[i]);
 		}
-		int n = numbers.size();
-		int max = (1<<numbers.size())-1;
-		vector< vector<int> > vec;
-		for(int i = 1 ; i<=max ; i++){
-			long long int temp = 0;
-			for(int j = 0 ; j<n ; j++){
-				if((i & (1<<j))!=0){
-					temp|=numbers[n-j-1];
-				}
+		int res=xd.size(),n=xd.size();
+		for(int mask = 0 ; mask <(1<<n) ; mask++){
+			int temp = 0 ;
+			for(int i = 0 ; i< n ; i++){
+				if((mask & (1<<i))==0)
+				temp|=xd[n-i-1];
 			}
-			if(temp==(long long int)goal){
-				vector<int> xd;
-				for(int j = 0 ; j<n ; j++){
-					if((i & (1<<j))!=0){
-					xd.push_back(numbers[n-j-1]);
-					}
-				}
-				vec.push_back(xd);				
-			}
+			if(goal!=temp)
+			res=min(res,__builtin_popcount(mask));
 		}
-		if(vec.size()==0)
-		return 0;
-		else if(vec.size()==1)
-		return 1;
-		int ans = vec.size();
-		for(int i =1 ; i<=max ; i++){
-			int temp = __builtin_popcount(i);
-			bool used[vec.size()];
-			memset(used,false,sizeof(used));
-			for(int j = 0 ; j< n ; j++){
-				if((i & (1<<j))!=0){
-					for(int k = 0 ; k< vec.size() ; k++){
-						if(!used[k]){
-							for(int l = 0 ; l<vec[k].size() ; l++){
-								if(vec[k][l]==numbers[n-j-1]){
-									used[k]=true;
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-			int p;
-			for(p=0 ; p<vec.size() ; p++){
-				if(!used[p])
-				break;
-			}
-			if(p==vec.size()){
-				ans=min(ans,temp);
-			}
-		}
-		return ans;
+		return res;
 	}
 };
 
