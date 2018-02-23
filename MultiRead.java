@@ -8,7 +8,24 @@ public class MultiRead
 {
 	public int minCycles(String trace, int procs)
 	{
-		
+		int total=0;
+		for(int i = 0 ; i < trace.length() ; i++){
+			if(trace.charAt(i)=='W')
+				total++;
+			else{
+				int count=0,j;
+				for(j = i ; j<trace.length() && trace.charAt(j)!='W' ; j++){
+					count++;
+				}
+				if(count%procs==0)
+					total+=(count/procs);
+				else{
+					total+=(count/procs)+1;
+				}
+				i=j-1;
+			}
+		}
+		return total;
 	}
 	
 	public static void main(String[] args)
